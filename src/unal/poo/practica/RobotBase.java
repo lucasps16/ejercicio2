@@ -17,25 +17,7 @@ public class RobotBase
             objetos = new City("Field.txt");
             objetos.showThingCounts(true);
             
-            //Direction.NORTH, EAST, SOUTH, WEST
-            //Definicion de la ubicacion del robot, Ciudad, posicion, Direccion, Numero things en el bolso.
-            estudiante = new Drone(objetos,0, 2, Direction.EAST,10,0);
-            Flor flor = new Flor(objetos, 0, 3);
-            Planta planta = new Planta(objetos, 0, 5, 0, 0, 0);
-            Semaforo semaforo = new Semaforo(objetos, 0, 6);
-	    //Mover una interseccion en el sentido al cual este apuntando el objeto.
-            estudiante.move ();
             
-            Thing t = estudiante.examineThings(new FlorPred()).next();
-            if(t instanceof Flor){
-               estudiante.pickThing();
-            }
-            
-            estudiante.move();
-            semaforo.cambiarEstado();
-            Thread.sleep(500);
-            semaforo.cambiarEstado();
-           
             
             
 	}
