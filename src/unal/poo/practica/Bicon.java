@@ -9,13 +9,14 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Bicon  extends Icon
+public  class Bicon extends Icon
 {
    private String icono;
-   public Bicon(String icono) {
+   public  Bicon(String icono) {
     this.icono = icono;
    }
     
+   @Override
   public void paintIcon(Graphics g)
   {
     try

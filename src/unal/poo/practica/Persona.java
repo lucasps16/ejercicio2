@@ -14,6 +14,9 @@ import becker.robots.Direction;
  * @author luckm
  */
 public class Persona extends Thing {
+   
+
+    
 
     public Persona(City city, int x, int y, Direction drctn) {
         super(city, x, y, drctn);
