@@ -9,13 +9,6 @@ import becker.robots.RobotSE;
 import becker.robots.Direction;
 import becker.robots.City;
 
-import static unal.poo.practica.RobotBase.carro;
-import static unal.poo.practica.RobotBase.carX;
-import static unal.poo.practica.RobotBase.carY;
-import static unal.poo.practica.RobotBase.personaY;
-import static unal.poo.practica.RobotBase.ncarros;
-import static unal.poo.practica.RobotBase.personaX;
-import static unal.poo.practica.RobotBase.direction;
 
 public class Car extends RobotSE implements Runnable {
 
@@ -46,63 +39,97 @@ public class Car extends RobotSE implements Runnable {
         System.out.println("El vehiculo se encuentra a " + dist + " cuadras.");
         return dist;
     }
-//    public static Direction setDirection(){
-//         if(carY < personaY){
-//            direction = Direction.SOUTH;
-//        } else if(carY > personaY){
-//            direction = Direction.NORTH;
-//        } else {};
-//        
-//         if(carX < personaX){
-//            direction = Direction.EAST;
-//        } else if(carX > personaX){
-//            direction = Direction.WEST;
-//        } else {};
-//        
-//        return direction;
-//    }
+    public  Direction setDirection(){
+         if(this.getAvenue() < this.persona.DestinoY()){
+            direction = Direction.SOUTH;
+        } else if(this.getAvenue() > this.persona.DestinoY()){
+            direction = Direction.NORTH;
+        } else if(this.getStreet() < this.persona.DestinoX()){
+            direction = Direction.EAST;
+        } else if(this.getStreet() > this.persona.DestinoX()){
+            direction = Direction.WEST;
+        } else {};
+        
+        return direction;
+    }
 
     public boolean irPersona() {
         int dx = this.persona.Street() - this.getStreet();
         int dy = this.persona.Avenue() - this.getAvenue();
 
-        System.out.println("getAvenue: " + this.getAvenue());
-        System.out.println("getStreet: " + this.getStreet());
-        System.out.println("persona.Avenue: " + this.persona.Avenue());
-        System.out.println("persona.Street: " + this.persona.Street());
-
         if (this.getAvenue() < this.persona.Avenue() && this.getStreet() < this.persona.Street()) {
             for (int i = 0; i < Math.abs(dx); i++) {
                 this.move();
-                recorrido++;
+                
             }
             this.turnLeft();
         } else if (this.getAvenue() < this.persona.Avenue() && this.getStreet() > this.persona.Street()) {
             for (int i = 0; i < Math.abs(dx); i++) {
                 this.move();
-                recorrido++;
+                
             }
             this.turnRight();
         }else if(this.getAvenue() > this.persona.Avenue() && this.getStreet() > this.persona.Street()){
              for (int i = 0; i < Math.abs(dx); i++) {
                 this.move();
-                recorrido++;
+                
             }
             this.turnLeft();
         }else if(this.getAvenue() > this.persona.Avenue() && this.getStreet() < this.persona.Street()){
              for (int i = 0; i < Math.abs(dx); i++) {
                 this.move();
-                recorrido++;
+                
             }
              this.turnRight();
         }
         for (int i = 0; i < Math.abs(dy); i++) {
             this.move();
-            recorrido++;
+            
         }
         this.pickThing();
-
+        
         return true;
+    }
+    
+    public boolean irDestino(){
+        System.out.println("Destino: Calle "+ this.persona.DestinoX()+ " - Avenida "+ this.persona.DestinoY());
+        int xi = this.persona.DestinoX() - this.getStreet();
+        int yi = this.persona.DestinoY() - this.getAvenue();
+        
+        setDirection();
+        
+         if (this.getAvenue() < this.persona.DestinoY() && this.getStreet() < this.persona.DestinoX()) {
+            for (int i = 0; i < Math.abs(xi); i++) {
+                this.move();
+                recorrido ++;
+            }
+            this.turnLeft();
+        } else if (this.getAvenue() < this.persona.DestinoY() && this.getStreet() > this.persona.DestinoX()) {
+            for (int i = 0; i < Math.abs(xi); i++) {
+                this.move();
+                recorrido ++;
+            }
+            this.turnRight();
+        }else if(this.getAvenue() > this.persona.DestinoY() && this.getStreet() > this.persona.DestinoX()){
+             for (int i = 0; i < Math.abs(xi); i++) {
+                this.move();
+                recorrido++;
+            }
+            this.turnLeft();
+        }else if(this.getAvenue() > this.persona.DestinoY() && this.getStreet() < this.persona.DestinoX()){
+             for (int i = 0; i < Math.abs(xi); i++) {
+                this.move();
+                recorrido++;
+            }
+             this.turnRight();
+        }
+        for (int i = 0; i < Math.abs(yi); i++) {
+            this.move();
+            recorrido++;
+        }
+        this.putAllThings();
+        setIcon(new Bicon("carro1.png"));
+        return true;        
     }
 
     public void cambiarColor() {
@@ -112,17 +139,19 @@ public class Car extends RobotSE implements Runnable {
 
     public double calcularGanacias() {
         double ganancias;
-        ganancias = recorrido * 1000;
+        ganancias = (recorrido * 1000)/2;
         System.out.println("El conductor ha ganado " + ganancias + " pesos.");
         return ganancias;
     }
+    
+    
 
     @Override
     public void run() {
         medirDistancia();
         irPersona();
         cambiarColor();
+        irDestino();
         calcularGanacias();
-
     }
 }
