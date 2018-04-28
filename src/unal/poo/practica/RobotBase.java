@@ -4,7 +4,7 @@ import becker.robots.*;
 import becker.robots.City;
 import java.util.Random;
 import java.util.Scanner;
-import static unal.poo.practica.Car.setDirection;
+
 
 //NOTA: DEBE INGRESAR LA CANTIDAD DE VEHICULOS Y PERSONAS ANTES DE 
 //OPRIMIR START EN LA VENTANA EMERJENTE.
@@ -27,32 +27,46 @@ public class RobotBase
             //Declarar la creacion de la ciudad
             objetos = new City("Field.txt");
             objetos.showThingCounts(true);
+            int posCarX;
+            int posCarY;
+            int posPersonaX;
+            int posPersonaY;
             Scanner sc =  new Scanner(System.in);
             System.out.println("Ingrese cuantos vehiculos quiere: ");
             ncarros = sc.nextInt();
             System.out.println("Ingrese cuantas personas quiere: ");
             int npersonas = sc.nextInt();
-            setDirection();
-            
+            Car[] carro = new Car[ncarros];
+            Persona[] persona = new Persona[npersonas];
+           Thread[] hcarros = new Thread[ncarros];
+           
             for (int i = 0; i < ncarros; i++) {
-                int cx = generator.nextInt(15);
-                int cy = generator.nextInt(15);
-                carX = cx;
-                carY = cy;
-                carro[i] = new Car(objetos, carY, carX, direction, 0);
-                Thread car = new Thread((Runnable) carro[i]);
-            }
-            
-            for (int i = 0; i < npersonas; i++) {
+                posCarX =1; // generator.nextInt(15);
+                posCarY =8; // generator.nextInt(15);
+                posPersonaX =6; //generator.nextInt(15);
+                posPersonaY =6; //generator.nextInt(15);
+                
+                //Determina la direccion con la cual aparecen los carros.
+                if(posCarY < posPersonaY){
+                    direction = Direction.SOUTH;
+                } else if(posCarY > posPersonaY){
+                    direction = Direction.NORTH;
+                }
+//                if(posCarX < posPersonaX){
+//                    direction = Direction.EAST;
+//                } else if(posCarX > posPersonaX){
+//                    direction = Direction.WEST;
+//                }
+                
+                carro[i] = new Car(objetos, posCarY, posCarX, direction, 0);  
+               persona[i] = new Persona(objetos, posPersonaY, posPersonaX, Direction.NORTH);
+               carro[i].setPersona(persona[i]);
+               hcarros[i] = new Thread((Runnable) carro[i]);
+               hcarros[i].start();
+             
                
             }
             
-            
-//            
-	}
-        
-        
-        
-       
+	}  
 }
 

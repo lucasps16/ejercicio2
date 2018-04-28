@@ -23,10 +23,20 @@ public class Persona extends Thing {
         setIcon(new Bicon("persona.png"));
     }
     
-    public boolean Destino(int x, int y){
+    public boolean Destino(int y, int x){
+        
         return false;
     }
     
+    public int Street(){
+        int street = this.getIntersection().getStreet();
+        return street;
+    }
+    
+    public int Avenue(){
+        int avenue = this.getIntersection().getAvenue();
+        return avenue;
+    }
     
     
 }

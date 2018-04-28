@@ -1,0 +1,27 @@
+if(this.getAvenue()> this.persona.Coordenadas()[0] && this.getStreet()>this.persona.Coordenadas()[1]){
+                this.turnRight();
+            } else if (this.getAvenue() < this.persona.Coordenadas()[0] && this.getStreet()<this.persona.Coordenadas()[1]){
+                this.turnRight();
+            } else if (this.getAvenue() == this.persona.Coordenadas()[0] && this.getStreet() == this.persona.Coordenadas()[1]){
+
+            }else if(this.getAvenue()>this.persona.Coordenadas()[0] && this.getStreet() < this.persona.Coordenadas()[1]){
+                this.turnLeft();            
+            } else if(this.getAvenue()<this.persona.Coordenadas()[0] && this.getStreet()>this.persona.Coordenadas()[1]){
+                this.turnLeft();
+            }
+
+
+
+
+
+ if(carY > personaY && carX>personaX){
+                carro[j].turnRight();
+            } else if (carY < personaY && carX<personaX){
+                carro[j].turnRight();
+            } else if (carY == personaY && carX == personaX){
+
+            }else if(carY>personaY && carX < personaX){
+                carro[j].turnLeft();            
+            } else if(carY<personaY && carX>personaX){
+                carro[j].turnLeft();
+            }
