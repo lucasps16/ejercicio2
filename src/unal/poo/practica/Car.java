@@ -8,16 +8,17 @@ package unal.poo.practica;
 import becker.robots.RobotSE;
 import becker.robots.Direction;
 import becker.robots.City;
+import static unal.poo.practica.Main.direction;
 
 
 public class Car extends RobotSE implements Runnable {
 
     private Persona persona;
-    private int ganancias;
+    public static int ganancias;
     private static int recorrido = 0;
 
-    public Car(City city, int y, int x, Direction drct, int pasajeros) {
-        super(city, y, x, drct, pasajeros);
+    public Car(City city, int y, int x, Direction direction, int pasajeros) {
+        super(city, y, x, direction, pasajeros);
         setIcon(new Bicon("carro1.png"));
         this.persona = null;
 
@@ -39,16 +40,18 @@ public class Car extends RobotSE implements Runnable {
         System.out.println("El vehiculo se encuentra a " + dist + " cuadras.");
         return dist;
     }
-    public  Direction setDirection(){
-         if(this.getAvenue() < this.persona.DestinoY()){
-            direction = Direction.SOUTH;
-        } else if(this.getAvenue() > this.persona.DestinoY()){
-            direction = Direction.NORTH;
-        } else if(this.getStreet() < this.persona.DestinoX()){
+    public Direction setDirection(){
+        
+       
+        if(this.getStreet() < this.persona.DestinoX()){
+            
             direction = Direction.EAST;
         } else if(this.getStreet() > this.persona.DestinoX()){
+            
             direction = Direction.WEST;
-        } else {};
+        } else {
+             
+        }
         
         return direction;
     }
@@ -81,6 +84,11 @@ public class Car extends RobotSE implements Runnable {
                 
             }
              this.turnRight();
+        } else if(this.getAvenue() == this.persona.Avenue() || this.getStreet() == this.persona.Street()){
+             for (int i = 0; i < Math.abs(dx); i++) {
+                this.move();
+                
+            }
         }
         for (int i = 0; i < Math.abs(dy); i++) {
             this.move();
@@ -96,7 +104,7 @@ public class Car extends RobotSE implements Runnable {
         int xi = this.persona.DestinoX() - this.getStreet();
         int yi = this.persona.DestinoY() - this.getAvenue();
         
-        setDirection();
+        
         
          if (this.getAvenue() < this.persona.DestinoY() && this.getStreet() < this.persona.DestinoX()) {
             for (int i = 0; i < Math.abs(xi); i++) {
@@ -141,8 +149,11 @@ public class Car extends RobotSE implements Runnable {
         double ganancias;
         ganancias = (recorrido * 1000)/2;
         System.out.println("El conductor ha ganado " + ganancias + " pesos.");
+        
         return ganancias;
     }
+    
+   
     
     
 
@@ -151,7 +162,10 @@ public class Car extends RobotSE implements Runnable {
         medirDistancia();
         irPersona();
         cambiarColor();
+        setDirection();
         irDestino();
         calcularGanacias();
     }
 }
+
+   

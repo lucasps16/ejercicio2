@@ -1,8 +1,8 @@
-Harvest a Field
+Ciudad
 # first street, first avenue, num streets, num avenues showing 
 0 0 15 15
 # intersection size (in pixels) 
-38
+45
 # things
   
   
